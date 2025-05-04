@@ -32,6 +32,8 @@ module Jekyll
         @config = site.config["jekyll-archives"]
         @slug   = slugify_string_title
 
+        @suffix = site.config["archive_title_suffix"] || ""
+        
         # Use ".html" for file extension and url for path
         @ext  = File.extname(relative_path)
         @path = relative_path
@@ -39,10 +41,11 @@ module Jekyll
 
         @data = {
           "layout" => layout,
+          "title"  => "#{default_title}#{@suffix}"
         }
         
-      custom_title = @config.dig("titles", @type.to_s, @slug)
-      @data["title"] = custom_title || default_title
+        custom_title = @config.dig("titles", @type.to_s, @slug)
+        @data["title"] = custom_title || default_title
         
         @content = ""
       end
@@ -135,7 +138,7 @@ module Jekyll
       def default_title
         if @title.is_a?(String)
           label = @config.dig("labels", @type) || @type.capitalize
-          "#{label}: #{@title}"
+          "#{@title}"
         end
       end
       
