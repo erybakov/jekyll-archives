@@ -89,6 +89,7 @@ module Jekyll
       # Returns a String (for tag and category archives) and nil for
       # date-based archives.
       def title
+        return data["title"] if data["title"].is_a?(String)
         @title if @title.is_a?(String)
       end
 
