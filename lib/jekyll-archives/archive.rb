@@ -33,6 +33,7 @@ module Jekyll
         @slug   = slugify_string_title
 
         @suffix = site.config["archive_title_suffix"] || ""
+        custom_title = @config.dig("titles", @type.to_s, @slug)
         
         # Use ".html" for file extension and url for path
         @ext  = File.extname(relative_path)
@@ -41,11 +42,8 @@ module Jekyll
 
         @data = {
           "layout" => layout,
-          "title"  => "#{default_title}#{@suffix}"
+          "title"  => "#{custom_title || default_title}#{@suffix}"
         }
-        
-        custom_title = @config.dig("titles", @type.to_s, @slug)
-        @data["title"] = custom_title || default_title
         
         @content = ""
       end
