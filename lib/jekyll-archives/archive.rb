@@ -40,8 +40,10 @@ module Jekyll
         @data = {
           "layout" => layout,
         }
-        @data["title"] = site.frontmatter_defaults.find(relative_path, type: :archives)["title"] || default_title
-
+        
+        custom_title = site.frontmatter_defaults.find(relative_path, :archives, "title")
+        @data["title"] = custom_title || default_title
+        
         @content = ""
       end
 
