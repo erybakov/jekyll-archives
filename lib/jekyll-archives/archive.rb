@@ -41,8 +41,8 @@ module Jekyll
           "layout" => layout,
         }
         
-        custom_title = site.frontmatter_defaults.find(relative_path, :archives, "title")
-        @data["title"] = custom_title || default_title
+      custom_title = @config.dig("titles", @type.to_s, @slug)
+      @data["title"] = custom_title || default_title
         
         @content = ""
       end
@@ -133,7 +133,10 @@ module Jekyll
       private
 
       def default_title
-        @title if @title.is_a?(String)
+        if @title.is_a?(String)
+          label = @config.dig("labels", @type) || @type.capitalize
+          "#{label}: #{@title}"
+        end
       end
       
       # Generate slug if @title attribute is a string.
