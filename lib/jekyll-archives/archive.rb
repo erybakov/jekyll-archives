@@ -136,7 +136,7 @@ module Jekyll
       def default_title
         if @title.is_a?(String)
           label = @config.dig("labels", @type) || @type.capitalize
-          "#{@title}"
+          "#{@title.capitalize}"
         end
       end
       
