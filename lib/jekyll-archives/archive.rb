@@ -40,6 +40,8 @@ module Jekyll
         @data = {
           "layout" => layout,
         }
+        @data["title"] = site.frontmatter_defaults.find(relative_path, type: :archives)["title"] || default_title
+
         @content = ""
       end
 
@@ -128,6 +130,10 @@ module Jekyll
 
       private
 
+      def default_title
+        @title if @title.is_a?(String)
+      end
+      
       # Generate slug if @title attribute is a string.
       #
       # Note: mode other than those expected by Jekyll returns the given string after
